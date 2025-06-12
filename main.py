@@ -1,18 +1,16 @@
 import telebot
+from random import get_random_tip  
 
 # Инициализация бота с использованием его токена
-bot = telebot.TeleBot("TOKEN")
+bot = telebot.TeleBot("токен")
 
 # Обработчик команды '/start' и '/hello'
 @bot.message_handler(commands=['start', 'hello'])
 def send_welcome(message):
     bot.reply_to(
         message,
-        f'Привет! Я бот {bot.get_me().first_name} и я помогу тебе заботиться о природе при помощи команд /ecology и /ecology_tip и ише /ecology2!'
+        f'Привет! Я бот {bot.get_me().first_name} и я помогу тебе заботиться о природе при помощи команд /ecology, /ecology_tip, /ecology2 und /tip!'
     )
-
-# Обработчик команды '/heh'
-
 
 @bot.message_handler(commands=['ecology'])
 def send_ecology(message):
@@ -35,11 +33,10 @@ def send_cooltip(message):
         'Для утилизации отходов класса 1 их нужно перевозить в безопасных контейнерах, потому что этот класс может нанести большой вред экологии, если попадет в окружающую среду!'
     )
 
-@bot.message_handler(commands=['help'])
-def send_cooltip(message):
-    bot.reply_to(
-        message,
-        'чтобы получить подсказки по экологии, используй команды /ecology, /ecology_tip и /ecology2. Если ты хочешь узнать, как правильно утилизировать отходы класса 1 до 4, используй команду /ecology.'
-    )
+@bot.message_handler(commands=['tip'])
+def send_random_tip(message):
+    tip = get_random_tip()
+    bot.reply_to(message, tip)
+
 # Запуск бота
 bot.polling()
